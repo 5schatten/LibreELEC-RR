@@ -1,93 +1,31 @@
-From 3a92769fd0738bd64c30baca3017fe1dbb345e8c Mon Sep 17 00:00:00 2001
+From 464b0992ad939a87a3f1bb397d17f9b470b0153c Mon Sep 17 00:00:00 2001
 From: Rael Gugelmin Cunha <rael.gc@gmail.com>
-Date: Wed, 14 Nov 2018 09:11:21 -0200
+Date: Thu, 15 Nov 2018 14:38:20 -0200
 Subject: [PATCH] Work with dpad and analogs
 
 ---
- es-app/src/components/TextListComponent.h     | 20 +++++++-------
- es-app/src/guis/GuiFastSelect.cpp             |  8 +++---
- es-app/src/views/SystemView.cpp               | 16 ++++++------
- es-app/src/views/UIModeController.cpp         |  2 +-
- .../src/views/gamelist/GridGameListView.cpp   |  2 +-
- .../views/gamelist/ISimpleGameListView.cpp    |  6 ++---
- es-core/src/InputConfig.cpp                   | 15 +++++++++++
- es-core/src/InputConfig.h                     |  1 +
- es-core/src/Window.cpp                        | 10 +++----
- es-core/src/components/ComponentGrid.cpp      |  8 +++---
- es-core/src/components/ComponentList.cpp      |  4 +--
- .../src/components/DateTimeEditComponent.cpp  | 26 +++++++++----------
- es-core/src/components/ImageGridComponent.h   | 10 +++----
- es-core/src/components/OptionListComponent.h  |  4 +--
- es-core/src/components/SliderComponent.cpp    |  4 +--
- es-core/src/components/TextEditComponent.cpp  |  8 +++---
- 16 files changed, 80 insertions(+), 64 deletions(-)
+ es-app/src/components/TextListComponent.h        |  6 +++---
+ es-app/src/guis/GuiFastSelect.cpp                |  8 ++++----
+ es-app/src/views/SystemView.cpp                  | 16 ++++++++--------
+ es-app/src/views/UIModeController.cpp            |  2 +-
+ es-app/src/views/gamelist/GridGameListView.cpp   |  2 +-
+ .../src/views/gamelist/ISimpleGameListView.cpp   |  4 ++--
+ es-core/src/InputConfig.cpp                      | 15 +++++++++++++++
+ es-core/src/InputConfig.h                        |  1 +
+ es-core/src/Window.cpp                           |  4 ++--
+ es-core/src/components/ComponentGrid.cpp         |  8 ++++----
+ es-core/src/components/ComponentList.cpp         |  4 ++--
+ es-core/src/components/DateTimeEditComponent.cpp |  8 ++++----
+ es-core/src/components/ImageGridComponent.h      | 10 +++++-----
+ es-core/src/components/OptionListComponent.h     |  4 ++--
+ es-core/src/components/SliderComponent.cpp       |  4 ++--
+ es-core/src/components/TextEditComponent.cpp     |  8 ++++----
+ 16 files changed, 60 insertions(+), 44 deletions(-)
 
 diff --git a/es-app/src/components/TextListComponent.h b/es-app/src/components/TextListComponent.h
-index 42ab9501b..c64296a4a 100644
+index 42ab9501b..2873b1847 100644
 --- a/es-app/src/components/TextListComponent.h
 +++ b/es-app/src/components/TextListComponent.h
-@@ -37,14 +37,14 @@ class TextListComponent : public IList<TextListData, T>
- 	using IList<TextListData, T>::stopScrolling;
- 
- 	TextListComponent(Window* window);
--	
-+
- 	bool input(InputConfig* config, Input input) override;
- 	void update(int deltaTime) override;
- 	void render(const Transform4x4f& parentTrans) override;
- 	void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view, const std::string& element, unsigned int properties) override;
- 
- 	void add(const std::string& name, const T& obj, unsigned int colorId);
--	
-+
- 	enum Alignment
- 	{
- 		ALIGN_LEFT,
-@@ -63,7 +63,7 @@ class TextListComponent : public IList<TextListData, T>
- 			it->data.textCache.reset();
- 	}
- 
--	inline void setUppercase(bool /*uppercase*/) 
-+	inline void setUppercase(bool /*uppercase*/)
- 	{
- 		mUppercase = true;
- 		for(auto it = mEntries.begin(); it != mEntries.end(); it++)
-@@ -106,7 +106,7 @@ class TextListComponent : public IList<TextListData, T>
- };
- 
- template <typename T>
--TextListComponent<T>::TextListComponent(Window* window) : 
-+TextListComponent<T>::TextListComponent(Window* window) :
- 	IList<TextListData, T>(window), mSelectorImage(window)
- {
- 	mMarqueeOffset = 0;
-@@ -131,7 +131,7 @@ template <typename T>
- void TextListComponent<T>::render(const Transform4x4f& parentTrans)
- {
- 	Transform4x4f trans = parentTrans * getTransform();
--	
-+
- 	std::shared_ptr<Font>& font = mFont;
- 
- 	if(size() == 0)
-@@ -143,7 +143,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
- 
- 	//number of entries that can fit on the screen simultaniously
- 	int screenCount = (int)(mSize.y() / entrySize + 0.5f);
--	
-+
- 	if(size() >= screenCount)
- 	{
- 		startEntry = mCursor - screenCount/2;
-@@ -174,7 +174,7 @@ void TextListComponent<T>::render(const Transform4x4f& parentTrans)
- 	// clip to inside margins
- 	Vector3f dim(mSize.x(), mSize.y(), 0);
- 	dim = trans * dim - trans.translation();
--	Renderer::pushClipRect(Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()), 
-+	Renderer::pushClipRect(Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()),
- 		Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
- 
- 	for(int i = startEntry; i < listCutoff; i++)
 @@ -251,13 +251,13 @@ bool TextListComponent<T>::input(InputConfig* config, Input input)
  	{
  		if(input.value != 0)
@@ -109,7 +47,7 @@ index 42ab9501b..c64296a4a 100644
  			}
  		}else{
 -			if(config->isMappedTo("down", input) || config->isMappedTo("up", input) || 
-+			if(config->isMappedLike("down", input) || config->isMappedLike("up", input) ||
++			if(config->isMappedLike("down", input) || config->isMappedLike("up", input) || 
  				config->isMappedTo("pagedown", input) || config->isMappedTo("pageup", input))
  			{
  				stopScrolling();
@@ -226,18 +164,9 @@ index 084c3fc49..efaaab6d8 100644
  
  	return ISimpleGameListView::input(config, input);
 diff --git a/es-app/src/views/gamelist/ISimpleGameListView.cpp b/es-app/src/views/gamelist/ISimpleGameListView.cpp
-index 2caf26b1e..eb17a4470 100644
+index 2caf26b1e..5a1a68ed3 100644
 --- a/es-app/src/views/gamelist/ISimpleGameListView.cpp
 +++ b/es-app/src/views/gamelist/ISimpleGameListView.cpp
-@@ -15,7 +15,7 @@ ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root) : IGame
- 	mHeaderText.setPosition(0, 0);
- 	mHeaderText.setHorizontalAlignment(ALIGN_CENTER);
- 	mHeaderText.setDefaultZIndex(50);
--	
-+
- 	mHeaderImage.setResize(0, mSize.y() * 0.185f);
- 	mHeaderImage.setOrigin(0.5f, 0.0f);
- 	mHeaderImage.setPosition(mSize.x() / 2, 0);
 @@ -118,7 +118,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
  			}
  
@@ -295,7 +224,7 @@ index f3f1cbf05..4969d8ff0 100644
  	//Returns a list of names this input is mapped to.
  	std::vector<std::string> getMappedTo(Input input);
 diff --git a/es-core/src/Window.cpp b/es-core/src/Window.cpp
-index 76e935db1..6e0585732 100644
+index 76e935db1..3c0aa1d06 100644
 --- a/es-core/src/Window.cpp
 +++ b/es-core/src/Window.cpp
 @@ -120,9 +120,9 @@ void Window::input(InputConfig* config, Input input)
@@ -310,33 +239,6 @@ index 76e935db1..6e0585732 100644
  				{
  					if (input.value != 0) {
  						// handle screensaver control
-@@ -224,7 +224,7 @@ void Window::update(int deltaTime)
- 
- 	if(peekGui())
- 		peekGui()->update(deltaTime);
--	
-+
- 	// Update the screensaver
- 	if (mScreenSaver)
- 		mScreenSaver->update(deltaTime);
-@@ -262,7 +262,7 @@ void Window::render()
- 	unsigned int screensaverTime = (unsigned int)Settings::getInstance()->getInt("ScreenSaverTime");
- 	if(mTimeSinceLastInput >= screensaverTime && screensaverTime != 0)
- 		startScreenSaver();
--	
-+
- 	// Always call the screensaver render function regardless of whether the screensaver is active
- 	// or not because it may perform a fade on transition
- 	renderScreenSaver();
-@@ -271,7 +271,7 @@ void Window::render()
- 	{
- 		mInfoPopup->render(transform);
- 	}
--	
-+
- 	if(mTimeSinceLastInput >= screensaverTime && screensaverTime != 0)
- 	{
- 		if (!isProcessing() && mAllowSleep && (!mScreenSaver || mScreenSaver->allowSleep()))
 diff --git a/es-core/src/components/ComponentGrid.cpp b/es-core/src/components/ComponentGrid.cpp
 index f4e7619f4..066f9a3f0 100644
 --- a/es-core/src/components/ComponentGrid.cpp
@@ -383,20 +285,9 @@ index 28cdf0cf7..c2c42d8f3 100644
  		return listInput(input.value != 0 ? 1 : 0);
  
 diff --git a/es-core/src/components/DateTimeEditComponent.cpp b/es-core/src/components/DateTimeEditComponent.cpp
-index 1617934c0..178201492 100644
+index 1617934c0..d4b6636a3 100644
 --- a/es-core/src/components/DateTimeEditComponent.cpp
 +++ b/es-core/src/components/DateTimeEditComponent.cpp
-@@ -4,8 +4,8 @@
- #include "utils/StringUtil.h"
- #include "Renderer.h"
- 
--DateTimeEditComponent::DateTimeEditComponent(Window* window, DisplayMode dispMode) : GuiComponent(window), 
--	mEditing(false), mEditIndex(0), mDisplayMode(dispMode), mRelativeUpdateAccumulator(0), 
-+DateTimeEditComponent::DateTimeEditComponent(Window* window, DisplayMode dispMode) : GuiComponent(window),
-+	mEditing(false), mEditIndex(0), mDisplayMode(dispMode), mRelativeUpdateAccumulator(0),
- 	mColor(0x777777FF), mFont(Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)), mUppercase(false), mAutoSize(true)
- {
- 	updateTextCache();
 @@ -54,9 +54,9 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
  		}
  
@@ -409,22 +300,7 @@ index 1617934c0..178201492 100644
  			incDir = -1;
  
  		if(incDir != 0)
-@@ -71,7 +71,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
- 					new_tm.tm_mon = 0;
- 				else if(new_tm.tm_mon < 0)
- 					new_tm.tm_mon = 11;
--				
-+
- 			}
- 			else if(mEditIndex == 1)
- 			{
-@@ -98,20 +98,20 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
- 				new_tm.tm_mday = days_in_month;
- 
- 			mTime = new_tm;
--			
-+
- 			updateTextCache();
+@@ -103,7 +103,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
  			return true;
  		}
  
@@ -433,49 +309,15 @@ index 1617934c0..178201492 100644
  		{
  			mEditIndex++;
  			if(mEditIndex >= (int)mCursorBoxes.size())
- 				mEditIndex--;
+@@ -111,7 +111,7 @@ bool DateTimeEditComponent::input(InputConfig* config, Input input)
  			return true;
  		}
--		
+ 		
 -		if(config->isMappedTo("left", input))
-+
 +		if(config->isMappedLike("left", input))
  		{
  			mEditIndex--;
  			if(mEditIndex < 0)
-@@ -160,7 +160,7 @@ void DateTimeEditComponent::render(const Transform4x4f& parentTrans)
- 		{
- 			if(mEditIndex >= 0 && (unsigned int)mEditIndex < mCursorBoxes.size())
- 			{
--				Renderer::drawRect((int)mCursorBoxes[mEditIndex][0], (int)mCursorBoxes[mEditIndex][1], 
-+				Renderer::drawRect((int)mCursorBoxes[mEditIndex][0], (int)mCursorBoxes[mEditIndex][1],
- 					(int)mCursorBoxes[mEditIndex][2], (int)mCursorBoxes[mEditIndex][3], 0x00000022);
- 			}
- 		}
-@@ -222,12 +222,12 @@ std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
- 				sprintf(buf, "%d minute%s ago", dur.getMinutes(), (dur.getMinutes() > 1) ? "s" : "");
- 			else
- 				sprintf(buf, "%d second%s ago", dur.getSeconds(), (dur.getSeconds() > 1) ? "s" : "");
--			
-+
- 			return std::string(buf);
- 		}
- 		break;
- 	}
--	
-+
- 	if(mTime.getTime() == 0)
- 		return "unknown";
- 
-@@ -317,7 +317,7 @@ void DateTimeEditComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
- 		return;
- 
- 	// We set mAutoSize BEFORE calling GuiComponent::applyTheme because it calls
--	// setSize(), which will call updateTextCache(), which will reset mSize if 
-+	// setSize(), which will call updateTextCache(), which will reset mSize if
- 	// mAutoSize == true, ignoring the theme's value.
- 	if(properties & ThemeFlags::SIZE)
- 		mAutoSize = !elem->has("size");
 diff --git a/es-core/src/components/ImageGridComponent.h b/es-core/src/components/ImageGridComponent.h
 index 0b30caec5..21a2558a7 100644
 --- a/es-core/src/components/ImageGridComponent.h

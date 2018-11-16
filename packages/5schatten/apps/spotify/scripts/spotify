@@ -82,10 +82,12 @@ if [ "$SPOTIFY_PKGVER" != "$(cat $SPOTIFY_VERSION)" ]; then
   update_spotify "$1" > $SPOTIFY_LOG-update.log 2>&1
 fi
 
-# Check if asound.conf file is found
-if [ -f /storage/.config/asound.conf ]; then
-  run_spotify "$@" > $SPOTIFY_LOG.log 2>&1
-else
-  # Inform about missing asound.conf
+#### Inform about missing asound.conf ###
+if [ ! -f /storage/.config/asound.conf ]; then
   missing_asound_conf
+  usleep 21000000
+fi
+
+if [ -f $SPOTIFY_HOME/spotify ]; then
+  run_spotify "$@" > $SPOTIFY_LOG.log 2>&1
 fi

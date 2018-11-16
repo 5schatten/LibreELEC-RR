@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
 
 PKG_NAME="lr-database"
-PKG_VERSION="e199b3bdaa7d67ae0c9b46df86bc99e3e6b2d4e8"
-PKG_SHA256="beafaf2f74be988a22dae58a48b515d572de32d2960fb1e61bc6f782f0726fb3"
+PKG_VERSION="09b8579f3635762b2f09f7899e138201bccdf9e4"
+PKG_SHA256="59a5abf16265297124fdad644b7fa4a414373016a9221630a92fc587c5520a8c"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/libretro-database"
 PKG_URL="https://github.com/libretro/libretro-database/archive/$PKG_VERSION.tar.gz"
@@ -29,11 +29,6 @@ post_makeinstall_target() {
   if [ "$PROJECT" = "Amlogic" ] || [ "$PROJECT" = "RPi" ]; then
     rm $INSTALL/usr/share/retroarch/database/rdb/MAME.rdb
     rm $INSTALL/usr/share/retroarch/database/rdb/MAME\ 2014.rdb
-  fi
-
-  #workaround until a MAME 2003-Plus database for romset 0.78+ is included
-  if [ ! -f "$INSTALL/usr/share/retroarch/database/rdb/MAME 2003-Plus.rdb" ]; then
-    ln -sf "/usr/share/retroarch/database/rdb/MAME 2003.rdb" "$INSTALL/usr/share/retroarch/database/rdb/MAME 2003-Plus.rdb"
   fi
 
   #workaround until a MAME 2016 database for romset 0.174 is included

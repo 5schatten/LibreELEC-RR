@@ -10,21 +10,19 @@ if [ ! -L /storage/.emulationstation ]; then
   ln -s /storage/.config/emulationstation /storage/.emulationstation
 fi
 
-# Check if asound.conf file is found
-if [ -f /storage/.config/asound.conf ]; then
-
-  # Freeze Kodi / stop audio
-  kodifreeze.sh freeze
-
-  # Set SDL audio driver to Pulseaudio or ALSA
-  set_SDL_audiodriver
-
-  emulationstation $EMULATIONSTATION_OPTS "$@" > /var/log/emulationstation.log 2>&1
-
-  # Unfreeze Kodi / start audio
-  kodifreeze.sh unfreeze
-
-else
-  # Inform about missing asound.conf
+#### Inform about missing asound.conf ###
+if [ ! -f /storage/.config/asound.conf ]; then
   missing_asound_conf
-fi
+  usleep 21000000
+fi  
+
+# Freeze Kodi / stop audio
+kodifreeze.sh freeze
+
+# Set SDL audio driver to Pulseaudio or ALSA
+set_SDL_audiodriver
+
+emulationstation $EMULATIONSTATION_OPTS "$@" > /var/log/emulationstation.log 2>&1
+
+# Unfreeze Kodi / start audio
+kodifreeze.sh unfreeze

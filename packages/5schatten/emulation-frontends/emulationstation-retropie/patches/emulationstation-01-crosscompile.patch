@@ -1,5 +1,5 @@
---- a/CMakeLists.txt	2016-03-24 12:15:07.452580559 +0100
-+++ b/CMakeLists.txt	2016-03-24 12:16:37.614101378 +0100
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -20,7 +20,7 @@
      set(GLSystem "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
  #-------------------------------------------------------------------------------
@@ -9,7 +9,17 @@
      MESSAGE("bcm_host.h found")
      set(BCMHOST found)
      set(GLSystem "OpenGL ES" CACHE STRING "The OpenGL system to be used")
-@@ -130,10 +130,10 @@
+@@ -32,7 +32,8 @@
+     set(GLSystem "OpenGL ES" CACHE STRING "The OpenGL system to be used")
+ #-------------------------------------------------------------------------------
+ #check if we're running on olinuxino / odroid / etc
+-elseif(EXISTS "/usr/lib/libMali.so" OR
++elseif(EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libMali.so" OR
++    EXISTS "${CMAKE_FIND_ROOT_PATH}/usr/lib/libhybris-common.so" OR
+     EXISTS "/usr/lib/arm-linux-gnueabihf/libMali.so" OR
+     EXISTS "/usr/lib/aarch64-linux-gnu/libMali.so" OR
+     EXISTS "/usr/lib/arm-linux-gnueabihf/mali-egl/libmali.so" OR
+@@ -140,10 +141,10 @@
  
  if(DEFINED BCMHOST)
      LIST(APPEND COMMON_INCLUDE_DIRS
@@ -22,14 +32,15 @@
 +        "${CMAKE_FIND_ROOT_PATH}/include/interface/vmcs_host/linux"
 +        "${CMAKE_FIND_ROOT_PATH}/include/interface/vcos/pthreads"
      )
- else()
-     if(${GLSystem} MATCHES "Desktop OpenGL")
-@@ -151,7 +151,7 @@
+ #add include directory for Vero4K
+ elseif(DEFINED VERO4K)
+@@ -166,7 +167,7 @@
  #define libraries and directories
  if(DEFINED BCMHOST)
      link_directories(
 -        "/opt/vc/lib"
 +        "${CMAKE_FIND_ROOT_PATH}/lib"
      )
- endif()
- 
+ elseif(DEFINED VERO4K)
+     link_directories(
+

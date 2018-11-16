@@ -87,13 +87,16 @@ fi
 
 ### Check if asound.conf file is found ###
 
-if [ -f /storage/.config/asound.conf ] && [ -f /opt/google/chrome/chrome ]; then 
+if [ -f /opt/google/chrome/chrome ]; then 
+  
+  if [ ! -f /storage/.config/asound.conf ]; then
+    #### Inform about missing asound.conf ###
+    missing_asound_conf
+    usleep 21000000
+  fi  
+
   echo "Starting Google Chrome..." >> $CHROME_LOG 2>&1
   run_chrome "$@" >> $CHROME_LOG 2>&1
-elif [ ! -f /storage/.config/asound.conf ]; then
-
-#### Inform about missing asound.conf ###
-  missing_asound_conf
 fi
 
 if [ "$NOPULSE" = "1" ]; then
