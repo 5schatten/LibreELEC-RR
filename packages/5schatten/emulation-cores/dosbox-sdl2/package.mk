@@ -13,7 +13,7 @@ PKG_LONGDESC="This is an enhanced SDL2 fork of DOSBox emulator by duganchen. It 
 PKG_TOOLCHAIN="autotools"
 
 if [ "$OPENGL_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dosbox-sdl2-shaders glew"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dosbox-sdl2-shaders glew glu"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
