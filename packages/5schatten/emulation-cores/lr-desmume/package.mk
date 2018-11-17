@@ -24,7 +24,7 @@ make_target() {
     arm1176jzf-s)
       make -C desmume/src/frontend/libretro -f Makefile.libretro platform=armv6-hardfloat-$TARGET_CPU GIT_VERSION=${PKG_VERSION:0:7}
       ;;
-    cortex-a7|cortex-a9)
+    cortex-a7|cortex-a9|cortex-a53)
       make -C desmume/src/frontend/libretro -f Makefile.libretro platform=armv7-neon-hardfloat-$TARGET_CPU GIT_VERSION=${PKG_VERSION:0:7}
       ;;
     *)

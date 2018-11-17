@@ -8,7 +8,7 @@ PKG_SHA256="01f3db3790714038c01f5e23c709e31ecd6f1c046ac93d19e1dde38b3fc05a9e"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://get.videolan.org/vlc/$PKG_VERSION/vlc-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus gnutls ffmpeg libmpeg2 zlib flac libvorbis"
+PKG_DEPENDS_TARGET="toolchain dbus gnutls ffmpeg libmpeg2 zlib flac libvorbis libxml2"
 PKG_LONGDESC="VideoLAN multimedia player and streamer"
 
 if [ "$TARGET_ARCH" = "arm" ]; then
