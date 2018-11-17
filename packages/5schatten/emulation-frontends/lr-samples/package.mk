@@ -3,7 +3,7 @@
 
 PKG_NAME="lr-samples"
 PKG_VERSION="8452cd9"
-PKG_SHA256="0803a06c42acc78b12dd71183ffbed62ef3630cf82a3714ab1dd705467bb51ca"
+PKG_SHA256="c0ebe09b71589fdfc39943a6e065d0acd076f9ffab6ea3839adca6d4f3b5e423"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/libretro/libretro-samples"
 PKG_URL="https://github.com/libretro/libretro-samples/archive/$PKG_VERSION.tar.gz"

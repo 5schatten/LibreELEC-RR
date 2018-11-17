@@ -3,7 +3,7 @@
 
 PKG_NAME="retroarch-common-overlays"
 PKG_VERSION="779c2a5"
-PKG_SHA256="1d9374df0a6b0d59de50a0817392adc71091e6cf5e0c6ef8252e8cc264ed001b"
+PKG_SHA256="d23b79083496ec72ce87bb6c81ebc6010f52a6e47f1ea4b2cd78cbf8a0d91ca1"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/common-overlays"
 PKG_URL="https://github.com/libretro/common-overlays/archive/$PKG_VERSION.tar.gz"

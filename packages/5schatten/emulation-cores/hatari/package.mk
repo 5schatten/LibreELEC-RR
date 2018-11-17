@@ -3,7 +3,7 @@
 
 PKG_NAME="hatari"
 PKG_VERSION="31028b8" #v2.1.0
-PKG_SHA256="3a210cc9ec0ade06bb2cbe0c90f0b2e78175602b329d44d7830f719e55b5fd76"
+PKG_SHA256="bdf6d6fba33c047edf2f54b8257d4fba25177267770aa44008e84d9bcffa3ba4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://hatari.tuxfamily.org/"
 PKG_URL="https://github.com/hatari/hatari/archive/$PKG_VERSION.tar.gz"

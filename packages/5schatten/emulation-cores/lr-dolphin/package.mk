@@ -3,7 +3,7 @@
 
 PKG_NAME="lr-dolphin"
 PKG_VERSION="a5bce7d"
-PKG_SHA256="3fdad8ee0d4d8280935d1bb4af619ace0e3f38ad8779e6f9ec19e2d7d11d9e7d"
+PKG_SHA256="c21a31381759220095146c4e510161b6d290c8af9c7447540e5993df89fc5f8e"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/dolphin"

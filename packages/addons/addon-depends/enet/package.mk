@@ -3,7 +3,7 @@
 
 PKG_NAME="enet"
 PKG_VERSION="39a72ab"
-PKG_SHA256="fc9b0eaf3f4d5a20ad138d8414a9586ca9ab5e8f44b33d9de4eacb40bbe07f0d"
+PKG_SHA256="cdeec4d447266d93dbd56564b260c57e411dc681caba6887a7e3f152009e6be1"
 PKG_ARCH="any"
 PKG_LICENSE=""
 PKG_SITE="https://github.com/lsalzman/enet"

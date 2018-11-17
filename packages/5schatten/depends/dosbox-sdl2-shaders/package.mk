@@ -3,7 +3,7 @@
 
 PKG_NAME="dosbox-sdl2-shaders"
 PKG_VERSION="af99e21"
-PKG_SHA256="538e06edd8a4fe3c31fe8a7b3da434e27b1786d974f2364a563a0371c9c5544e"
+PKG_SHA256="8a32f157e531971ba987866f10c1a3deb674a30efa0c11e87c94c3880d6530ea"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/duganchen/dosbox_shaders"
 PKG_URL="https://github.com/duganchen/dosbox_shaders/archive/$PKG_VERSION.tar.gz"

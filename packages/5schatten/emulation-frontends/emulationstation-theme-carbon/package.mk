@@ -3,7 +3,7 @@
 
 PKG_NAME="emulationstation-theme-carbon"
 PKG_VERSION="488ce79"
-PKG_SHA256="7d3da3e1838c38c0983294ae4be08e4b8212ec189e73c67f1639444eaf2e829c"
+PKG_SHA256="84f4fdc3b4c2d77c52d540f8ab01d5a1a51bf132158f7e830ac525051ca3c823"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-carbon"
 PKG_URL="https://github.com/RetroPie/es-theme-carbon/archive/$PKG_VERSION.tar.gz"

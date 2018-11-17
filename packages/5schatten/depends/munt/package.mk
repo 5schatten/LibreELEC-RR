@@ -4,7 +4,7 @@
 
 PKG_NAME="munt"
 PKG_VERSION="939cc98"
-PKG_SHA256="fb6577e09bd373875464c54ea64f572c97b642da00c84a9d47af9db2c00d1dba"
+PKG_SHA256="0d73b8dd2c9543b9fddb17ce9c6ca6729b4ef124009704a9891ef030fbfd9c35"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/munt/munt"
 PKG_URL="https://github.com/munt/munt/archive/$PKG_VERSION.tar.gz"
