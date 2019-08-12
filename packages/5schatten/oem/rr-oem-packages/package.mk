@@ -48,7 +48,6 @@ OEM_LIBRETRO_COMMON=" \
   mame2003-plus \
   mgba \
   mrboom \
-  mupen64plus-libretro \
   mupen64plus-nx \
   nestopia \
   pcsx_rearmed \
