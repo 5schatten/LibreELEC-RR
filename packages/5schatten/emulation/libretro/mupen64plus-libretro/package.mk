@@ -22,6 +22,11 @@ configure_package() {
     PKG_PATCH_DIRS="${OPENGLES}"
   fi
 
+  # Apply RPi4 specific patches
+  if [ "${DEVICE}" = "RPi4" ]; then
+    PKG_PATCH_DIRS="${DEVICE}"
+  fi
+
   # Displayserver Support
   if [ "${DISPLAYSERVER}" = "x11" ]; then
     PKG_DEPENDS_TARGET+=" xorg-server"
@@ -47,6 +52,12 @@ pre_configure_target() {
         ;;
       RPi2)
         PKG_MAKE_OPTS_TARGET+=" platform=rpi2"
+        ;;
+      RPi3)
+        PKG_MAKE_OPTS_TARGET+=" platform=rpi3"
+        ;;
+      RPi4)
+        PKG_MAKE_OPTS_TARGET+=" FORCE_GLES=1 WITH_DYNAREC=arm HAVE_NEON=1"
         ;;
     esac
   else
